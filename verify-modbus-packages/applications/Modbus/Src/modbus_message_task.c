@@ -16,7 +16,7 @@
 
 static const mb_backend_param_t mb_bkd_prm = {
     .rtu.dev = "uart3",     //设备名
-    .rtu.baudrate = 9600,   //波特率
+    .rtu.baudrate = 115200, //波特率
     .rtu.parity = 0,        //校验位, 0-无, 1-奇, 2-偶
     .rtu.pin = 79,          //控制引脚, <0 表示不使用
     .rtu.lvl = 1            //控制发送电平
@@ -24,16 +24,17 @@ static const mb_backend_param_t mb_bkd_prm = {
 
 static void mb_sample_read_regs(mb_inst_t *hinst)
 {
-    if (mb_connect(hinst) < 0)//连接失败, 延时返回
-    {
+
+    // 连接失败
+    if (modbus_connect(hinst) < 0){
         LOG_E("modbus connect fail.");
         return;
     }
 
-    u16 regs[64];
+    uint16_t regs[64];
     int addr = 4000;
     int nb = 29;
-    int total = mb_read_regs(hinst, addr, nb, regs);
+    int total = modbus_read_regs(hinst, addr, nb, regs);
     if (total <= 0)
     {
         LOG_E("modbus read register fail.");
@@ -48,30 +49,28 @@ static void mb_sample_read_regs(mb_inst_t *hinst)
     }
 }
 
-static void mb_sample_thread(void *args)//线程服务函数
-{
-    mb_inst_t *hinst = mb_create(MB_BACKEND_TYPE_RTU, &mb_bkd_prm);
-    RT_ASSERT(hinst != NULL);
 
-    //mb_set_slave(hinst, 1);//修改从机地址, 默认地址为1, 可根据实际情况修改
-    //mb_set_prot(hinst, MB_PROT_TCP);//修改通信协议类型, RTU后端默认使用MODBUS-RTU通信协议
-    //mb_set_tmo(hinst, 500, 15);//修改超时时间, 应答超时500ms(默认300ms), 字节超时15ms(默认32ms)
+
+static void modbus_message_thread_entry(void *args)
+{
+    mb_inst_t *modbus_hinst = modbus_create(MB_BACKEND_TYPE_RTU, &mb_bkd_prm);
+    RT_ASSERT(modbus_hinst != NULL);
 
     while(1)
     {
-        mb_sample_read_regs(hinst);
+//        mb_sample_read_regs(modbus_hinst);
         rt_thread_mdelay(1000);
     }
 }
 
-static int mb_sample_rtu_master_startup(void)
+static int modbus_rtu_master_startup(void)
 {
-    rt_thread_t tid = rt_thread_create("mb-rtu-master", mb_sample_thread, NULL, 2048, 5, 20);
-    RT_ASSERT(tid != NULL);
-    rt_thread_startup(tid);
+    rt_thread_t Modbus_Thread_Handle = rt_thread_create("mb-rtu-master", modbus_message_thread_entry, NULL, 2048, 6, 20);
+    RT_ASSERT(Modbus_Thread_Handle != NULL);
+    rt_thread_startup(Modbus_Thread_Handle);
     return(0);
 }
-INIT_APP_EXPORT(mb_sample_rtu_master_startup);
+INIT_APP_EXPORT(modbus_rtu_master_startup);
 
 
 

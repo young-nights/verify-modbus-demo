@@ -687,7 +687,7 @@ int modbus_write_regs(mb_inst_t *hinst, uint16_t addr, int nb, const uint16_t *p
         p += modbus_cvt_u16_put(p, pregs[i]);
     }
     int dlen = nb * 2;
-    return(mb_write_req(hinst, MODBUS_FC_WRITE_MULTIPLE_REGISTERS, addr, nb, hinst->datas, dlen));
+    return(modbus_write_req(hinst, MODBUS_FC_WRITE_MULTIPLE_REGISTERS, addr, nb, hinst->datas, dlen));
 }
 
 #ifdef MB_USING_RTU_PROTOCOL

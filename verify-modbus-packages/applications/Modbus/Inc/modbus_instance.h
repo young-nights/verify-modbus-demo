@@ -97,29 +97,29 @@ int modbus_flush(mb_inst_t *hinst);
 
 #ifdef MB_USING_MASTER
 //读请求, 功能码和数据由用户确定, 成功返回应答数据长度, 异常应答返回负值错误码, 其它错误返回0
-int mb_read_req(mb_inst_t *hinst, uint8_t func, uint16_t addr, int nb, uint8_t *pdata);
+int modbus_read_req(mb_inst_t *hinst, uint8_t func, uint16_t addr, int nb, uint8_t *pdata);
 //写请求, 功能码和数据由用户确定, 成功返回请求数量, 异常应答返回负值错误码, 其它错误返回0
-int mb_write_req(mb_inst_t *hinst, uint8_t func, uint16_t addr, int nb, const uint8_t *pdata, int dlen);
+int modbus_write_req(mb_inst_t *hinst, uint8_t func, uint16_t addr, int nb, const uint8_t *pdata, int dlen);
 //读多个线圈, 功能码-0x01, 成功返回读取位数量, 异常应答返回负值错误码, 其它错误返回0
-int mb_read_bits(mb_inst_t *hinst, uint16_t addr, int nb, uint8_t *pbits);
+int modbus_read_bits(mb_inst_t *hinst, uint16_t addr, int nb, uint8_t *pbits);
 //读多个离散量输入, 功能码-0x02, 成功返回读取位数量, 异常应答返回负值错误码, 其它错误返回0
-int mb_read_input_bits(mb_inst_t *hinst, uint16_t addr, int nb, uint8_t *pbits);
+int modbus_read_input_bits(mb_inst_t *hinst, uint16_t addr, int nb, uint8_t *pbits);
 //读多个保持寄存器, 功能码-0x03, 成功返回读取寄存器数量, 异常应答返回负值错误码, 其它错误返回0
-int mb_read_regs(mb_inst_t *hinst, uint16_t addr, int nb, uint16_t *pregs);
+int modbus_read_regs(mb_inst_t *hinst, uint16_t addr, int nb, uint16_t *pregs);
 //读多个输入寄存器, 功能码-0x04, 成功返回读取寄存器数量, 异常应答返回负值错误码, 其它错误返回0
-int mb_read_input_regs(mb_inst_t *hinst, uint16_t addr, int nb, uint16_t *pregs);
+int modbus_read_input_regs(mb_inst_t *hinst, uint16_t addr, int nb, uint16_t *pregs);
 //写单个线圈, 功能码-0x05, 成功返回1, 异常应答返回负值错误码, 其它错误返回0
-int mb_write_bit(mb_inst_t *hinst, uint16_t addr, uint8_t bit);
+int modbus_write_bit(mb_inst_t *hinst, uint16_t addr, uint8_t bit);
 //写单个保持寄存器, 功能码-0x06, 成功返回1, 异常应答返回负值错误码, 其它错误返回0
-int mb_write_reg(mb_inst_t *hinst, uint16_t addr, uint16_t val);
+int modbus_write_reg(mb_inst_t *hinst, uint16_t addr, uint16_t val);
 //写多个线圈, 功能码-0x0F, 成功返回写位数量, 异常应答返回负值错误码, 其它错误返回0
-int mb_write_bits(mb_inst_t *hinst, uint16_t addr, int nb, const uint8_t *pbits);
+int modbus_write_bits(mb_inst_t *hinst, uint16_t addr, int nb, const uint8_t *pbits);
 //写多个保持寄存器, 功能码-0x10, 成功返回写寄存器数量, 异常应答返回负值错误码, 其它错误返回0
-int mb_write_regs(mb_inst_t *hinst, uint16_t addr, int nb, const uint16_t *pregs);
+int modbus_write_regs(mb_inst_t *hinst, uint16_t addr, int nb, const uint16_t *pregs);
 //屏蔽写保持寄存器, 功能码-0x16, 成功返回1, 异常应答返回负值错误码, 其它错误返回0
-int mb_mask_write_reg(mb_inst_t *hinst, uint16_t addr, uint16_t mask_and, uint16_t mask_or);
+int modbus_mask_write_reg(mb_inst_t *hinst, uint16_t addr, uint16_t mask_and, uint16_t mask_or);
 //读/写多个保持寄存器, 功能码-0x17, 成功返回读取寄存器数量, 异常应答返回负值错误码, 其它错误返回0
-int mb_write_and_read_regs(mb_inst_t *hinst, uint16_t wr_addr, int wr_nb, const uint16_t *p_wr_regs,uint16_t rd_addr, int rd_nb, uint16_t *p_rd_regs);
+int modbus_write_and_read_regs(mb_inst_t *hinst, uint16_t wr_addr, int wr_nb, const uint16_t *p_wr_regs,uint16_t rd_addr, int rd_nb, uint16_t *p_rd_regs);
 #endif
 
 #ifdef MB_USING_SLAVE

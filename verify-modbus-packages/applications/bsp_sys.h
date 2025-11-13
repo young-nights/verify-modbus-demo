@@ -28,9 +28,6 @@
 /* 该头文件包含了所有CubeMX自动生成的初始化引脚 */
 #include "main.h"
 
-/* macBSP文件 */
-#include "bsp_rs485_drv.h"
-#include "bsp_rs485_dev.h"
 
 #include "modbus_backend.h"
 #include "modbus_byte_order_convert.h"
