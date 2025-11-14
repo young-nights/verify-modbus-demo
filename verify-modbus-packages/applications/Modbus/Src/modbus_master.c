@@ -70,8 +70,7 @@ static int modbus_read_req_rtu(mb_inst_t *hinst, uint8_t func, uint16_t addr, in
     #endif
 
     // 6. 检测异常应答
-    if (MODBUS_FC_EXCEPT_CHK(frm.pdu.fc))
-    {
+    if (MODBUS_FC_EXCEPT_CHK(frm.pdu.fc)){
         return(-(int)frm.pdu.exc.ec);
     }
 

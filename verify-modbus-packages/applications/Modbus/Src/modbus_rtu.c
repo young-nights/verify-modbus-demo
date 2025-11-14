@@ -7,8 +7,8 @@
  * Date           Author       Notes
  * 2025-11-04     Administrator       the first version
  */
-
-#include "bsp_sys.h"
+#include "modbus_crc.h"
+#include "modbus_rtu.h"
 
 
 #ifdef MB_USING_RTU_PROTOCOL

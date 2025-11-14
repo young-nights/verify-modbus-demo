@@ -58,7 +58,7 @@ uint16_t modbus_crc_cyc_cal(uint16_t init, const uint8_t *pdata, int len)
     return(crc);
 }
 
-uint16_t mb_crc_cal(const uint8_t *pdata, int len)
+uint16_t modbus_crc_cal(const uint8_t *pdata, int len)
 {
     return(modbus_crc_cyc_cal(MB_CRC_INIT_VOL, pdata, len));
 }

@@ -40,23 +40,23 @@ typedef enum{
     MB_PROT_TCP         //MODBUS-TCP通信协议
 }mb_prot_t;
 
-typedef int (*mb_read_bit_t)(uint16_t addr, uint8_t *pbit);//读bit位, 返回: 0-成功, -2-地址错误
-typedef int (*mb_write_bit_t)(uint16_t addr, uint8_t bit);//写bit位, 返回: 0-成功, -2-地址错误, -4-设备故障
-typedef int (*mb_read_reg_t)(uint16_t addr, uint16_t *pval);//读16位寄存器, 返回 : 0-成功, -2-地址错误
-typedef int (*mb_write_reg_t)(uint16_t addr, uint16_t val);//写16位寄存器, 返回 : 0-成功, -2-地址错误, -3-值非法, -4-设备故障
-typedef int (*mb_mask_write_t)(uint16_t addr, uint16_t mask_and, uint16_t mask_or);//屏蔽写寄存器, 返回 : 0-成功, -2-地址错误, -3-值非法, -4-设备故障
+typedef int (*modbus_read_bit_t)(uint16_t addr, uint8_t *pbit);//读bit位, 返回: 0-成功, -2-地址错误
+typedef int (*modbus_write_bit_t)(uint16_t addr, uint8_t bit);//写bit位, 返回: 0-成功, -2-地址错误, -4-设备故障
+typedef int (*modbus_read_reg_t)(uint16_t addr, uint16_t *pval);//读16位寄存器, 返回 : 0-成功, -2-地址错误
+typedef int (*modbus_write_reg_t)(uint16_t addr, uint16_t val);//写16位寄存器, 返回 : 0-成功, -2-地址错误, -3-值非法, -4-设备故障
+typedef int (*modbus_mask_write_t)(uint16_t addr, uint16_t mask_and, uint16_t mask_or);//屏蔽写寄存器, 返回 : 0-成功, -2-地址错误, -3-值非法, -4-设备故障
 
 
 /**
  * 从机回调函数表定义
  */
 typedef struct{
-    mb_read_bit_t   read_disc;  //读离散量输入
-    mb_read_bit_t   read_coil;  //读线圈
-    mb_write_bit_t  write_coil; //写线圈
-    mb_read_reg_t   read_input; //读输入寄存器
-    mb_read_reg_t   read_hold;  //读保持寄存器
-    mb_write_reg_t  write_hold; //写保持寄存器
+    modbus_read_bit_t   read_disc;  //读离散量输入
+    modbus_read_bit_t   read_coil;  //读线圈
+    modbus_write_bit_t  write_coil; //写线圈
+    modbus_read_reg_t   read_input; //读输入寄存器
+    modbus_read_reg_t   read_hold;  //读保持寄存器
+    modbus_write_reg_t  write_hold; //写保持寄存器
 }mb_cb_table_t;
 
 
@@ -124,9 +124,9 @@ int modbus_write_and_read_regs(mb_inst_t *hinst, uint16_t wr_addr, int wr_nb, co
 
 #ifdef MB_USING_SLAVE
 //修改从机回调函数表, 默认使用modbus_port中接口函数做回调函数
-void mb_set_cb_table(mb_inst_t *hinst, const mb_cb_table_t *cb);
+void modbus_set_cb_table(mb_inst_t *hinst, const mb_cb_table_t *cb);
 //从机状态机处理, 在线程中循环调用即可
-void mb_slave_fsm(mb_inst_t *hinst);
+void modbus_slave_fsm(mb_inst_t *hinst);
 #endif
 
 
